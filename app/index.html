@@ -3,23 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Leonida Trophy Guide — GTA VI, all 55 PS5 trophies</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="hero">
+  <div class="hero-inner">
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
+    <h1>Leonida Trophy Guide</h1>
+    <p class="lede">Every trophy, its official name and description, a guide in plain words with its sources, and a checklist that remembers your progress. Works fully offline — no network, no account.</p>
+    <div class="progress-wrap" aria-label="Progress">
+      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+      <p class="progress-text"><strong id="progress-count">0 of 55 earned</strong> &middot; <span id="progress-grade">0 platinum &middot; 0 gold &middot; 0 silver &middot; 0 bronze</span></p>
+    </div>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+
+<main>
+  <section class="toolbar" aria-label="Filters and tools">
+    <input id="search" type="search" placeholder="Search a trophy, mission or keyword…" aria-label="Search trophies">
+    <div class="chips" id="kind-chips" role="group" aria-label="Filter by kind">
+      <button type="button" data-kind="all" class="chip active">All 55</button>
+      <button type="button" data-kind="story" class="chip">Story</button>
+      <button type="button" data-kind="missable" class="chip">Missable</button>
+      <button type="button" data-kind="collectibles" class="chip">Collectibles</button>
+      <button type="button" data-kind="activities" class="chip">Activities</button>
+      <button type="button" data-kind="online" class="chip">Online</button>
+    </div>
+    <div class="toolbar-row">
+      <label>Grade
+        <select id="grade">
+          <option value="all">All grades</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <label class="toggle"><input id="spoiler" type="checkbox" checked> Hide story spoilers</label>
+      <label class="toggle"><input id="earned-only" type="checkbox"> Earned only</label>
+      <label class="toggle"><input id="missable-only" type="checkbox"> Missable only</label>
+      <span class="spacer"></span>
+      <button id="export" type="button">Export progress</button>
+      <label class="import-btn">Import progress <input id="import" type="file" accept="application/json,.json"></label>
+    </div>
+    <p class="toolbar-note" id="filter-note"></p>
+  </section>
+
+  <section class="roadmap" id="roadmap" aria-label="Roadmap to the platinum">
+    <div class="roadmap-head">
+      <h2>Roadmap to the platinum — Vice Got a Price!</h2>
+      <button id="roadmap-toggle" type="button">Hide roadmap</button>
+    </div>
+    <div class="roadmap-body">
+    <p class="roadmap-intro">PowerPyx puts the whole run at roughly 200 hours, Push Square at 300 or more. One playthrough, all 55 trophies offline, no online trophies. The order below is built from the official descriptions.</p>
+    <ol class="stages">
+      <li>
+        <h3>Stage 1 — Play the story, don't rush <span class="stage-count" data-stage="1"></span></h3>
+        <p>Chapters 1–4 and the story missions. Try activities as they unlock, scan with WAiNK as you travel, and start side strands when they appear. <strong>Do the Chapter 1 balcony meditation for Positive Mental Attitude before leaving Chapter 1</strong> — it is the one trophy that can be missed.</p>
+      </li>
+      <li>
+        <h3>Stage 2 — Finish the story and the side strands <span class="stage-count" data-stage="2"></span></h3>
+        <p>Final mission, then the side-character finales (Andy, Kenton, Billy, Randy, Tyrone), the 8 stranger strands, and the robbery and partner trophies. Character-locked strands need the right protagonist: Andy is Lucia-only, Tyrone and Bret are Jason-only.</p>
+      </li>
+      <li>
+        <h3>Stage 3 — The 100% completion push <span class="stage-count" data-stage="3"></span></h3>
+        <p>After the story, open Progress, then Stats, then the 100% Completion checklist. Stunts, shooting-range golds, drone races, card sets, WAiNK scans, challenges, vehicles, areas, garages and the money trophies. This is most of the hours.</p>
+      </li>
+      <li>
+        <h3>Stage 4 — Odd jobs and cleanup <span class="stage-count" data-stage="4"></span></h3>
+        <p>The one-off feats: Combat Focus, the VCIA departure, the showroom, bowling, the unconfirmed hidden trophies — then the platinum pops.</p>
+      </li>
+    </ol>
+    <p class="missable-callout" id="missable-callout"></p>
+    </div>
+  </section>
+
+  <section aria-label="Trophy list">
+    <p class="list-meta" id="list-meta"></p>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden>No trophies match these filters. <button type="button" id="reset-filters">Reset filters</button></p>
+  </section>
+
+  <section class="sources" aria-label="Sources and honesty note">
+    <h2>Sources and honesty note</h2>
+    <p>Official names, descriptions and grades are as PlayStation publishes them, cross-checked on Exophase and PSNProfiles. Guides are written for this entry in its own words; each trophy names its sources beside its guide. Five hidden trophies — In The Beginning…, Capital Offense, Bad Luck, I Guess, The Truth Is Out There and Ten Pin — have no verified method in any published guide yet (GameMapa lists them as still unsolved), and this guide says so instead of inventing one. Counts such as 397 stunts, 42 shooting-range challenges and 18 card sets come from GameMapa, Push Square and KeenGamer.</p>
+    <ul class="source-list">
+      <li>Exophase — GTA VI trophies (PSN): the official list</li>
+      <li>PSNProfiles — GTA VI trophy list: cross-check of names, descriptions and grades</li>
+      <li>PowerPyx — GTA 6 Trophy Guide &amp; Roadmap: roadmap, 200-hour estimate</li>
+      <li>Push Square — GTA 6 Trophy Guide and Roadmap: 100% Completion checklist, 300-hour estimate</li>
+      <li>KeenGamer — GTA 6 Trophy Guide &amp; Platinum Roadmap: the one missable trophy, cleanup counts</li>
+      <li>GameMapa — All 55 GTA 6 Trophies: counts, character locks, the five unsolved hidden trophies</li>
+      <li>Insider Gaming — Complete GTA 6 Trophy List: the list and the 28 hidden trophies</li>
+    </ul>
+    <p class="fineprint">An unofficial fan guide. Not affiliated with Rockstar Games, Sony or PlayStation. No Rockstar logo or artwork is used anywhere in this guide.</p>
+  </section>
+</main>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
